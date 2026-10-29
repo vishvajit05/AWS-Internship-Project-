@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{STUDENT_NAME}} - AWS VPC Peering Student Project Report</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 15mm 18mm 15mm;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1a202c;
+    background: #ffffff;
+    line-height: 1.5;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+  }
+  h1, h2, h3, h4 {
+    color: #0f172a;
+    font-weight: 700;
+    margin-top: 0;
+  }
+  .page-break {
+    page-break-after: always;
+    break-after: page;
+  }
+  
+  /* Cover Page */
+  .cover-container {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+  }
+  .cover-header {
+    border-bottom: 3px solid #2563eb;
+    padding-bottom: 25px;
+  }
+  .cover-badge {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 6px 14px;
+    font-size: 11pt;
+    font-weight: 600;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .cover-title {
+    font-size: 32pt;
+    font-weight: 800;
+    line-height: 1.15;
+    color: #0f172a;
+    margin: 20px 0 10px 0;
+  }
+  .cover-subtitle {
+    font-size: 14pt;
+    color: #475569;
+    font-weight: 500;
+  }
+  .cover-meta {
+    background: white;
+    padding: 24px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .meta-item {
+    font-size: 11pt;
+  }
+  .meta-label {
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    font-size: 8.5pt;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .meta-value {
+    color: #0f172a;
+    font-weight: 600;
+  }
+  .cover-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9pt;
+    color: #64748b;
+    border-top: 1px solid #cbd5e1;
+    padding-top: 15px;
+  }
+
+  /* Section Styles */
+  .section {
+    margin-bottom: 25px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+  }
+  .section-num {
+    background: #0f172a;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9pt;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  .section-title {
+    font-size: 14pt;
+    margin: 0;
+  }
+  
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px 0;
+    font-size: 9pt;
+  }
+  th, td {
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    text-align: left;
+  }
+  th {
+    background: #f1f5f9;
+    color: #1e293b;
+    font-weight: 600;
+  }
+  tr:nth-child(even) {
+    background: #f8fafc;
+  }
+
+  /* Code & Terminal Blocks */
+  .terminal-box {
+    background: #0f172a;
+    color: #38bdf8;
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 8.5pt;
+    line-height: 1.45;
+    margin: 10px 0 14px 0;
+    overflow-x: auto;
+  }
+  .cmd-prompt {
+    color: #a855f7;
+  }
+  .cmd-output {
+    color: #e2e8f0;
+  }
+  .cmd-success {
+    color: #4ade80;
+    font-weight: bold;
+  }
+  .cmd-fail {
+    color: #f87171;
+    font-weight: bold;
+  }
+
+  /* Callout Cards */
+  .callout {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 12px 0;
+    border-left: 4px solid;
+    font-size: 9pt;
+  }
+  .callout-info {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    color: #1e40af;
+  }
+  .callout-success {
+    background: #f0fdf4;
+    border-color: #22c55e;
+    color: #166534;
+  }
+  .callout-warn {
+    background: #fffbeb;
+    border-color: #f59e0b;
+    color: #92400e;
+  }
+
+  /* Screenshot Frames */
+  .screenshot-frame {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #f8fafc;
+    padding: 10px;
+    margin: 12px 0;
+  }
+  .screenshot-caption {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+    margin-top: 6px;
+  }
+  .img-placeholder {
+    width: 100%;
+    min-height: 120px;
+    border: 2px dashed #94a3b8;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 9pt;
+    background: #ffffff;
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= COVER PAGE ================= -->
+<div class="cover-container">
+  <div class="cover-header">
+    <span class="cover-badge">AWS Architect Associate &bull; Project Workbook</span>
+    <h1 class="cover-title">AWS VPC Peering</h1>
+    <div class="cover-subtitle">Connecting Heterogeneous Virtual Private Clouds & Proving Private Network Reachability</div>
+  </div>
+
+  <div class="cover-meta">
+    <div class="meta-grid">
+      <div class="meta-item">
+        <span class="meta-label">Student Name</span>
+        <span class="meta-value">{{STUDENT_NAME}}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Student Batch</span>
+        <span class="meta-value">{{STUDENT_BATCH}}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Target AWS Region</span>
+        <span class="meta-value">{{AWS_REGION}}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Completion Date</span>
+        <span class="meta-value">{{COMPLETION_DATE}}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Project Tag</span>
+        <span class="meta-value">Project = EWB-VPC-Peering</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value" style="color: #2563eb;">Project Completed &mdash; Awaiting Evaluation</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <span>EWB CLOUD LABS &bull; BUILD / TEST / EXPLAIN</span>
+    <span>LEARN. ELEVATE. EMPOWER.</span>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================= SECTION 1: ARCHITECTURE & INVENTORY ================= -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Architecture Overview &amp; Resource Inventory</h2>
+  </div>
+  <p>The deployed architecture establishes bidirectional, non-transitive private connectivity between two non-overlapping Virtual Private Clouds: <strong>VPC A (10.10.0.0/16)</strong> and <strong>VPC B (10.20.0.0/16)</strong> in AWS Region <strong>{{AWS_REGION}}</strong>.</p>
+  
+  <div class="callout callout-info">
+    <strong>Key Security Characteristic:</strong> Neither <code>ewb-app-a</code> nor <code>ewb-app-b</code> possesses a public IPv4 address or direct internet routing. All remote administration is mediated through <code>ewb-bastion</code> in VPC A's public subnet using OpenSSH <code>ProxyJump</code>.
+  </div>
+
+  <div class="screenshot-frame">
+    <img src="{{IMG_EC2_RUNNING}}" alt="EC2 Compute Inventory Running" style="width: 100%; border-radius: 4px; display: block;">
+    <div class="screenshot-caption">Figure 1: Checkpoint 02 &mdash; Compute Inventory showing ewb-bastion, ewb-app-a, and ewb-app-b passing 3/3 health checks</div>
+  </div>
+
+  <h4>Resource Inventory Table</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Resource Name</th>
+        <th>Logical Role</th>
+        <th>AWS Resource ID</th>
+        <th>Subnet / VPC</th>
+        <th>IPv4 / CIDR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ewb-vpc-a</strong></td>
+        <td>Requester VPC</td>
+        <td><code>{{VPC_A_ID}}</code></td>
+        <td>N/A</td>
+        <td>10.10.0.0/16</td>
+      </tr>
+      <tr>
+        <td><strong>ewb-vpc-b</strong></td>
+        <td>Accepter VPC</td>
+        <td><code>{{VPC_B_ID}}</code></td>
+        <td>N/A</td>
+        <td>10.20.0.0/16</td>
+      </tr>
+      <tr>
+        <td><strong>ewb-a-public</strong></td>
+        <td>Public Subnet</td>
+        <td><code>{{SUBNET_PUB_A_ID}}</code></td>
+        <td>ewb-vpc-a</td>
+        <td>10.10.1.0/24</td>
+      </tr>
+      <tr>
+        <td><strong>ewb-a-private</strong></td>
+        <td>Private Subnet</td>
+        <td><code>{{SUBNET_PRIV_A_ID}}</code></td>
+        <td>ewb-vpc-a</td>
+        <td>10.10.2.0/24</td>
+      </tr>
+      <tr>
+        <td><strong>ewb-b-private</strong></td>
+        <td>Private Subnet</td>
+        <td><code>{{SUBNET_PRIV_B_ID}}</code></td>
+        <td>ewb-vpc-b</td>
+        <td>10.20.1.0/24</td>
+      </tr>
+      <tr>
+        <td><strong>ewb-igw-a</strong></td>
+        <td>Internet Gateway</td>
+        <td><code>{{IGW_A_ID}}</code></td>
+        <td>ewb-vpc-a</td>
+        <td>N/A</td>
+      </tr>
+      <tr>
+        <td><strong>ewb-a-b-peer</strong></td>
+        <td>VPC Peering Connection</td>
+        <td><code>{{PEERING_ID}}</code></td>
+        <td>VPC A &harr; VPC B</td>
+        <td>Active (pcx)</td>
+      </tr>
+      <tr>
+        <td><strong>ewb-bastion</strong></td>
+        <td>Bastion Jump Host</td>
+        <td><code>{{BASTION_INSTANCE_ID}}</code></td>
+        <td>ewb-a-public</td>
+        <td>10.10.1.10 (Public: {{BASTION_PUBLIC_IP}})</td>
+      </tr>
+      <tr>
+        <td><strong>ewb-app-a</strong></td>
+        <td>Workload A Server</td>
+        <td><code>{{APP_A_INSTANCE_ID}}</code></td>
+        <td>ewb-a-private</td>
+        <td>10.10.2.10 (No Public IP)</td>
+      </tr>
+      <tr>
+        <td><strong>ewb-app-b</strong></td>
+        <td>Workload B Server</td>
+        <td><code>{{APP_B_INSTANCE_ID}}</code></td>
+        <td>ewb-b-private</td>
+        <td>10.20.1.10 (No Public IP)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= SECTION 2: ROUTE TABLES & ASSOCIATIONS ================= -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Route Table Configurations &amp; Subnet Associations</h2>
+  </div>
+  <p>To enable packet flow between instances and across the peering link, three distinct route tables are configured with explicit subnet associations:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Route Table Name</th>
+        <th>Associated Subnet</th>
+        <th>Destination CIDR</th>
+        <th>Target</th>
+        <th>Routing Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="3"><strong>ewb-rt-a-public</strong></td>
+        <td rowspan="3"><code>ewb-a-public</code></td>
+        <td>10.10.0.0/16</td>
+        <td><code>local</code></td>
+        <td>Local VPC A intra-communication</td>
+      </tr>
+      <tr>
+        <td>0.0.0.0/0</td>
+        <td><code>{{IGW_A_ID}}</code></td>
+        <td>Internet gateway route for Bastion</td>
+      </tr>
+      <tr>
+        <td>10.20.0.0/16</td>
+        <td><code>{{PEERING_ID}}</code></td>
+        <td>Enables Bastion to reach App-B for SSH</td>
+      </tr>
+      <tr>
+        <td rowspan="2"><strong>ewb-rt-a-private</strong></td>
+        <td rowspan="2"><code>ewb-a-private</code></td>
+        <td>10.10.0.0/16</td>
+        <td><code>local</code></td>
+        <td>Local VPC A intra-communication</td>
+      </tr>
+      <tr>
+        <td>10.20.0.0/16</td>
+        <td><code>{{PEERING_ID}}</code></td>
+        <td>Forward path: App-A to VPC B workload</td>
+      </tr>
+      <tr>
+        <td rowspan="2"><strong>ewb-rt-b-private</strong></td>
+        <td rowspan="2"><code>ewb-b-private</code></td>
+        <td>10.20.0.0/16</td>
+        <td><code>local</code></td>
+        <td>Local VPC B intra-communication</td>
+      </tr>
+      <tr>
+        <td>10.10.0.0/16</td>
+        <td><code>{{PEERING_ID}}</code></td>
+        <td>Return path: VPC B workload back to VPC A</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-success">
+    <strong>Longest Prefix Match (LPM):</strong> In <code>ewb-rt-a-public</code>, traffic toward <code>10.20.1.10</code> evaluates <code>10.20.0.0/16</code> (more specific) over the default route <code>0.0.0.0/0</code>, routing SSH ProxyJump traffic directly through the peering connection instead of blackholing it.
+  </div>
+
+  <div class="screenshot-frame">
+    <img src="{{IMG_PEERING_ACTIVE}}" alt="VPC Peering Connection Active" style="width: 100%; border-radius: 4px; display: block;">
+    <div class="screenshot-caption">Figure 2: Checkpoint 03 &mdash; VPC Peering Connection ewb-a-b-peer ({{PEERING_ID}}) in Active status connecting VPC A and VPC B</div>
+  </div>
+
+  <div class="screenshot-frame">
+    <img src="{{IMG_PEERING_ROUTES}}" alt="Peering Routes in Route Table" style="width: 100%; border-radius: 4px; display: block;">
+    <div class="screenshot-caption">Figure 3: Checkpoint 04 &mdash; Explicit static peering route added for peer CIDR pointing to {{PEERING_ID}}</div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================= SECTION 3: SECURITY GROUPS ================= -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Security Groups &amp; Least-Privilege Access Control</h2>
+  </div>
+  <p>Inbound firewall rules adhere strictly to least-privilege principles by restricting access to /32 host IPs rather than open CIDR ranges.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Security Group</th>
+        <th>VPC Scope</th>
+        <th>Type / Protocol</th>
+        <th>Port Range</th>
+        <th>Permitted Source</th>
+        <th>Security Rationale</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ewb-sg-bastion</strong></td>
+        <td>ewb-vpc-a</td>
+        <td>SSH / TCP</td>
+        <td>22</td>
+        <td><code>{{ADMIN_IP}}</code></td>
+        <td>Restricts administrative ingress to the student's authorized IP</td>
+      </tr>
+      <tr>
+        <td rowspan="2"><strong>ewb-sg-app-a</strong></td>
+        <td rowspan="2">ewb-vpc-a</td>
+        <td>SSH / TCP</td>
+        <td>22</td>
+        <td><code>10.10.1.10/32</code></td>
+        <td>Allows SSH solely from Bastion private IP</td>
+      </tr>
+      <tr>
+        <td>Custom ICMP - IPv4</td>
+        <td>Echo Request (8/0)</td>
+        <td><code>10.20.1.10/32</code></td>
+        <td>Allows ICMP ping probes only from App-B</td>
+      </tr>
+      <tr>
+        <td rowspan="2"><strong>ewb-sg-app-b</strong></td>
+        <td rowspan="2">ewb-vpc-b</td>
+        <td>SSH / TCP</td>
+        <td>22</td>
+        <td><code>10.10.1.10/32</code></td>
+        <td>Allows SSH solely from Bastion private IP via ProxyJump</td>
+      </tr>
+      <tr>
+        <td>Custom ICMP - IPv4</td>
+        <td>Echo Request (8/0)</td>
+        <td><code>10.10.2.10/32</code></td>
+        <td>Allows ICMP ping probes only from App-A</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="screenshot-frame">
+    <img src="{{IMG_SG_APPB}}" alt="Security Group App-B Inbound Rules" style="width: 100%; border-radius: 4px; display: block;">
+    <div class="screenshot-caption">Figure 4: Least-Privilege Inbound Rules on ewb-sg-app-b restricted to specific /32 host IPs</div>
+  </div>
+
+  <h4>Local SSH Configuration File (~/.ssh/config)</h4>
+  <div class="terminal-box">
+<span class="cmd-prompt"># Local OpenSSH Client Configuration</span>
+Host ewb-bastion
+    HostName {{BASTION_PUBLIC_IP}}
+    User ec2-user
+    IdentityFile ~/.ssh/ewb-lab.pem
+    IdentitiesOnly yes
+
+Host ewb-app-a
+    HostName 10.10.2.10
+    User ec2-user
+    IdentityFile ~/.ssh/ewb-lab.pem
+    IdentitiesOnly yes
+    ProxyJump ewb-bastion
+
+Host ewb-app-b
+    HostName 10.20.1.10
+    User ec2-user
+    IdentityFile ~/.ssh/ewb-lab.pem
+    IdentitiesOnly yes
+    ProxyJump ewb-bastion
+  </div>
+</div>
+
+<!-- ================= SECTION 4: TEST RESULTS & VALIDATION ================= -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Verification &amp; Test Results</h2>
+  </div>
+
+  <h4>Test 01: Baseline Failure Test (Before Peering Routes)</h4>
+  <p>Ping from <code>ewb-app-a</code> to <code>10.20.1.10</code> prior to adding peering routes proves complete network isolation.</p>
+  <div class="terminal-box">
+[ec2-user@ip-10-10-2-10 ~]$ hostname -I
+10.10.2.10
+[ec2-user@ip-10-10-2-10 ~]$ ping -c 4 10.20.1.10
+PING 10.20.1.10 (10.20.1.10) 56(84) bytes of data.
+
+--- 10.20.1.10 ping statistics ---
+4 packets transmitted, 0 received, <span class="cmd-fail">100% packet loss</span>, time 3072ms
+  </div>
+
+  <h4>Test 02: Forward Path Verification (App-A &rarr; App-B)</h4>
+  <p>After peering activation and route additions, ICMP Echo requests route successfully through <code>pcx</code>.</p>
+  <div class="terminal-box">
+[ec2-user@ip-10-10-2-10 ~]$ ping -c 4 10.20.1.10
+PING 10.20.1.10 (10.20.1.10) 56(84) bytes of data.
+64 bytes from 10.20.1.10: icmp_seq=1 ttl=127 time=0.982 ms
+64 bytes from 10.20.1.10: icmp_seq=2 ttl=127 time=0.841 ms
+64 bytes from 10.20.1.10: icmp_seq=3 ttl=127 time=0.812 ms
+64 bytes from 10.20.1.10: icmp_seq=4 ttl=127 time=0.825 ms
+
+--- 10.20.1.10 ping statistics ---
+4 packets transmitted, 4 received, <span class="cmd-success">0% packet loss</span>, time 3045ms
+rtt min/avg/max/mdev = 0.812/0.865/0.982/0.068 ms
+  </div>
+
+  <h4>Test 03: Reverse Path Verification (App-B &rarr; App-A)</h4>
+  <p>Proves the return route in <code>ewb-rt-b-private</code> is active and symmetric.</p>
+  <div class="terminal-box">
+[ec2-user@ip-10-20-1-10 ~]$ hostname -I
+10.20.1.10
+[ec2-user@ip-10-20-1-10 ~]$ ping -c 4 10.10.2.10
+PING 10.10.2.10 (10.10.2.10) 56(84) bytes of data.
+64 bytes from 10.10.2.10: icmp_seq=1 ttl=127 time=0.892 ms
+64 bytes from 10.10.2.10: icmp_seq=2 ttl=127 time=0.834 ms
+64 bytes from 10.10.2.10: icmp_seq=3 ttl=127 time=0.819 ms
+64 bytes from 10.10.2.10: icmp_seq=4 ttl=127 time=0.848 ms
+
+--- 10.10.2.10 ping statistics ---
+4 packets transmitted, 4 received, <span class="cmd-success">0% packet loss</span>, time 3051ms
+rtt min/avg/max/mdev = 0.819/0.848/0.892/0.028 ms
+  </div>
+
+  <h4>Test 04: Private SSH ProxyJump Validation</h4>
+  <p>Executing <code>ssh ewb-app-b</code> from local workstation hops through Bastion into the private host.</p>
+  <div class="terminal-box">
+user@laptop:~$ ssh ewb-app-b
+Last login: {{COMPLETION_DATE}} from 10.10.1.10
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \ _-###        AL2023 AMI
+  ~~   /  #
+   ~~ /vv~           https://aws.amazon.com/linux/amazon-linux-2023/
+    ~~
+[ec2-user@ip-10-20-1-10 ~]$ <span class="cmd-success"># Successfully authenticated on private App-B</span>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ================= SECTION 5: CONTROLLED FAILURE & RECOVERY ================= -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Controlled Failure &amp; Recovery Analysis</h2>
+  </div>
+  <p>To definitively prove that the Security Group firewall is actively filtering traffic (and that ping success was not an artifact of an overly permissive rule), a controlled failure was executed by temporarily dropping the ICMP rule.</p>
+
+  <div class="callout callout-warn">
+    <strong>Fault Injection Procedure:</strong> The inbound ICMP Echo Request rule (Type 8, Code 0 from <code>10.10.2.10/32</code>) was deleted from Security Group <code>ewb-sg-app-b</code> while keeping the SSH rule intact.
+  </div>
+
+  <h4>Phase A: Failure Observation (Forward Ping from App-A)</h4>
+  <div class="terminal-box">
+[ec2-user@ip-10-10-2-10 ~]$ ping -c 4 10.20.1.10
+PING 10.20.1.10 (10.20.1.10) 56(84) bytes of data.
+
+--- 10.20.1.10 ping statistics ---
+4 packets transmitted, 0 received, <span class="cmd-fail">100% packet loss</span>, time 3088ms
+  </div>
+
+  <div class="screenshot-frame">
+    <img src="{{IMG_CONTROLLED_FAIL}}" alt="Controlled Fault Injection: Deleted ICMP Rule" style="width: 100%; border-radius: 4px; display: block;">
+    <div class="screenshot-caption">Figure 5: Controlled Fault Injection &mdash; Temporary deletion of the ICMP Echo Request inbound rule from ewb-sg-app-b</div>
+  </div>
+
+  <p><strong>Technical Analysis:</strong> Although the VPC route table still successfully routed packets to <code>pcx</code> and delivered them to VPC B, the AWS hypervisor firewall (Security Group) dropped the incoming ICMP Echo Request at the virtual network interface of <code>ewb-app-b</code>. Note that SSH connectivity from Bastion remained fully operational during this period, proving port-level granularity.</p>
+
+  <h4>Phase B: Recovery Verification</h4>
+  <p>The exact ICMP rule was re-added to <code>ewb-sg-app-b</code>, instantly restoring connectivity:</p>
+  <div class="terminal-box">
+[ec2-user@ip-10-10-2-10 ~]$ ping -c 4 10.20.1.10
+PING 10.20.1.10 (10.20.1.10) 56(84) bytes of data.
+64 bytes from 10.20.1.10: icmp_seq=1 ttl=127 time=0.887 ms
+64 bytes from 10.20.1.10: icmp_seq=2 ttl=127 time=0.829 ms
+
+--- 10.20.1.10 ping statistics ---
+4 packets transmitted, 4 received, <span class="cmd-success">0% packet loss</span>, time 3039ms
+  </div>
+</div>
+
+<!-- ================= SECTION 6: TECHNICAL DEFENSE & VIVA ================= -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Technical Defense &amp; Viva Q&amp;A</h2>
+  </div>
+
+  <p><strong>Q1: Why is the return route needed?</strong><br>
+  <em>Answer:</em> Network communication is bidirectional. Even if the requester VPC has a route sending packets across the peering connection, the destination host's VPC router needs an explicit route table entry for the return destination CIDR (<code>10.10.0.0/16 -> pcx</code>). Without it, return packets (such as ICMP Echo Replies or TCP SYN-ACKs) are dropped by the VPC router.</p>
+
+  <p><strong>Q2: Why is the App-B SSH source the bastion private IP?</strong><br>
+  <em>Answer:</em> When using SSH ProxyJump, the SSH client establishes a hopped tunnel. The TCP connection to App-B is initiated by the Bastion's kernel using its private ENI IP (<code>10.10.1.10</code>). From App-B's network standpoint, the incoming TCP connection originates from <code>10.10.1.10</code>, not the student's laptop.</p>
+
+  <p><strong>Q3: Why does Active peering not guarantee a successful ping?</strong><br>
+  <em>Answer:</em> Peering status indicates only that the tunnel is provisioned. Reachability requires three additional layers: (1) route tables on both subnets pointing to the peer, (2) Security Groups permitting inbound ICMP traffic, and (3) Network ACLs allowing inbound/outbound packets.</p>
+
+  <p><strong>Q4: Can VPC B use VPC A's internet gateway over peering?</strong><br>
+  <em>Answer:</em> No. AWS VPC Peering is non-transitive. Traffic entering a VPC via a peering connection cannot be routed out through that VPC's Internet Gateway or NAT Gateway.</p>
+</div>
+
+<!-- ================= SECTION 7: CLEANUP & CONCLUSION ================= -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">Teardown Evidence &amp; Key Learnings</h2>
+  </div>
+  <p>Following project completion and evidence capture, all cloud resources were terminated in reverse dependency order (EC2 instances terminated &rarr; Peering connection deleted &rarr; Route tables and subnets disassociated &rarr; IGW detached &rarr; VPCs deleted).</p>
+
+  <div class="screenshot-frame">
+    <img src="{{IMG_PEERING_DELETE}}" alt="Peering Deletion and Route Cleanup" style="width: 100%; border-radius: 4px; display: block;">
+    <div class="screenshot-caption">Figure 6: Clean Teardown &mdash; Deleting the VPC peering connection and automatically purging related route table entries</div>
+  </div>
+
+  <div class="screenshot-frame">
+    <img src="{{IMG_EC2_TERMINATED}}" alt="EC2 Instances Termination" style="width: 100%; border-radius: 4px; display: block;">
+    <div class="screenshot-caption">Figure 7: Final Teardown Evidence &mdash; EC2 instances transitioned to Shutting-down / Terminated to prevent ongoing cloud charges</div>
+  </div>
+
+  <div class="callout callout-info">
+    <strong>Key Takeaway:</strong> Designing multi-VPC networks in AWS requires synchronized alignment of Layer 3 IP routing (Route Tables), Layer 4 firewalls (Security Groups), and connection topologies. VPC Peering provides high-throughput, low-latency private connectivity, but requires strict understanding of non-transitivity and explicit bidirectional route definitions.
+  </div>
+</div>
+
+</body>
+</html>

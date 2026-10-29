@@ -1,0 +1,18 @@
+{
+  "STUDENT_NAME": "Aditya Pawar",
+  "STUDENT_BATCH": "AWS Architect Associate - Oct 2026",
+  "AWS_REGION": "ap-south-1 (Mumbai)",
+  "COMPLETION_DATE": "22 October 2026",
+  "ADMIN_IP": "122.170.198.164/32",
+  "VPC_A_ID": "vpc-084a10c21275c9423",
+  "VPC_B_ID": "vpc-0d5be64741a5ab8b9",
+  "SUBNET_PUB_A_ID": "subnet-074a1bdc28f74eb7b",
+  "SUBNET_PRIV_A_ID": "subnet-0739012e0e05001b3",
+  "SUBNET_PRIV_B_ID": "subnet-083532ce04867e0d8",
+  "IGW_A_ID": "igw-0852644c6bf4be208",
+  "PEERING_ID": "pcx-078073f607a5a75f0",
+  "BASTION_INSTANCE_ID": "i-006304f40baed16dc",
+  "BASTION_PUBLIC_IP": "52.66.105.166",
+  "APP_A_INSTANCE_ID": "i-0c4aabcc3f387bde1",
+  "APP_B_INSTANCE_ID": "i-0e096e913d95c559a"
+}
